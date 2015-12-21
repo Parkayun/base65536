@@ -11,31 +11,31 @@ B2 = {"5376":-1,"13312":0,"13568":1,"13824":2,"14080":3,"14336":4,"14592":5,"148
 
 
 def encode(value):
-    result = ''
+    strs = []
     for x in xrange(0, len(value), 2):
         b1 = value[x]
         b2 = str(ord(value[x+1])) if x+1 < len(value) else '-1'
         code_point = BLOCK_START[b2] + ord(b1)
-        result = ''.join((result, unichr(code_point)))
-    return result
+        strs.append(unichr(code_point))
+    return ''.join(strs)
 
 
 def decode(value):
-    result = ''
+    bufs = []
     done = False
-    for x in xrange(0, len(value)):
-        code_point = ord(value[x])
+    for ch in value:
+        code_point = ord(ch)
         b1 = code_point & ((1 << 8) - 1)
-        b2 = B2[str(code_point - b1)]
-
-        result = ''.join((result, chr(b1)))
-        if b2 == -1:
+        try:
+            b2 = B2[str(code_point - b1)]
+        except ValueError:
+            raise ValueError(
+                'Not a valid Base65536 code point: ' + str(code_point - b1))
+        buf = chr(b1) if b2 == -1 else chr(b1) + chr(b2)
+        if len(buf) == 1:
             if done:
-                raise Exception
+                raise ValueError(
+                    'Base65536 sequence continued after final byte')
             done = True
-        else:
-            result = ''.join((result, unichr(b2)))
-        if code_point >= (1 << 16):
-            x += 1
-    return result
-
+        bufs.append(buf)
+    return b''.join(bufs)
