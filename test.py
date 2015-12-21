@@ -18,13 +18,13 @@ def assert_encoding(data):
     assert base65536.decode(encoded) == data
 
 
-# @pytest.mark.parametrize('filename', os.listdir(SAMPLES_DIRNAME))
-# def test_sample_file(filename):
-#     # https://github.com/ferno/base65536/blob/
-#     # 25d6ea5104a16c24787fa1d8b4af836ba8bb6214/test.js#L72
-#     with open(os.path.join(SAMPLES_DIRNAME, filename)) as f:
-#         data = f.read()
-#     assert_encoding(data)
+@pytest.mark.parametrize('filename', os.listdir(SAMPLES_DIRNAME))
+def test_sample_file(filename):
+    # https://github.com/ferno/base65536/blob/
+    # 25d6ea5104a16c24787fa1d8b4af836ba8bb6214/test.js#L72
+    with open(os.path.join(SAMPLES_DIRNAME, filename)) as f:
+        data = f.read()
+    assert_encoding(data)
 
 
 def test_1_byte():
@@ -48,18 +48,6 @@ def test_bad():
     bad = base65536.encode('\x25') + base65536.encode('\x13')
     with pytest.raises(ValueError):
         base65536.decode(bad)
-
-
-def test_first_error_regression():
-    # https://github.com/ferno/base65536/blob/
-    # 25d6ea5104a16c24787fa1d8b4af836ba8bb6214/test.js#L36
-    encoded = base65536.encode('\x00\x6e')
-    assert ord(encoded[0]) == 67072
-    assert len(encoded) == 2
-    assert encoded[0] == u'\xd801'
-    assert encoded[1] == u'\xde00'
-    assert encoded == u'\xd801\xde00'
-    assert base65536.decode(encoded) == '\x00\x6e'
 
 
 def test_hello_world():
