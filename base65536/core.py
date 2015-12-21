@@ -8,7 +8,7 @@
 """
 import io
 
-from six import int2byte, unichr
+from six import indexbytes, int2byte, unichr
 from six.moves import range
 
 
@@ -110,10 +110,11 @@ B2 = {
 def encode(value):
     """Encodes bytes to a Base-65536 string."""
     stream = io.StringIO()
-    for x in range(0, len(value), 2):
-        b1 = value[x]
-        b2 = ord(value[x + 1]) if x + 1 < len(value) else -1
-        code_point = BLOCK_START[b2] + ord(b1)
+    length = len(value)
+    for x in range(0, length, 2):
+        b1 = indexbytes(value, x)
+        b2 = indexbytes(value, x + 1) if x + 1 < length else -1
+        code_point = BLOCK_START[b2] + b1
         stream.write(unichr(code_point))
     return stream.getvalue()
 
