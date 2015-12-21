@@ -12,4 +12,4 @@ install:
 - pip install -e .
 - pip install pytest
 script:
-- python setup.py test
+- py.test -v
