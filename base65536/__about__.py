@@ -3,7 +3,7 @@
    base65536.__about__
    ~~~~~~~~~~~~~~~~~~~
 """
-__version__ = '0.1'
+__version__ = '0.1.1'
 __author__ = 'Ayun Park'
 __author_email__ = 'iamparkayun@gmail.com'
 __description__ = 'Base-65536 Python implementation'
