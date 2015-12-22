@@ -1,1 +1,13 @@
-from .core import encode, decode
+# -*- coding: utf-8 -*-
+"""
+   base65536
+   ~~~~~~~~~
+
+   Base-65536 Python implementation.
+
+"""
+from .__about__ import __version__  # noqa
+from .core import decode, encode
+
+
+__all__ = ['encode', 'decode']
