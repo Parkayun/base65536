@@ -28,4 +28,5 @@ setup(
     url=about['__url__'],
     install_requires=['six'],
     tests_require=['pytest'],
+    license='MIT',
 )
