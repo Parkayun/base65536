@@ -128,7 +128,7 @@ def decode(value):
         b1 = code_point & ((1 << 8) - 1)
         try:
             b2 = B2[code_point - b1]
-        except ValueError:
+        except KeyError:
             raise ValueError('Invalid Base-65536 code point: '
                              '%d' % (code_point - b1))
         b = int2byte(b1) if b2 == -1 else int2byte(b1) + int2byte(b2)
