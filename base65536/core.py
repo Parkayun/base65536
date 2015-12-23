@@ -3,7 +3,7 @@
    base65536.core
    ~~~~~~~~~~~~~~
 
-   The core algorithm of Base-65536.
+   The core algorithm of base65536.
 
 """
 import io
@@ -108,7 +108,7 @@ B2 = {
 
 
 def encode(value):
-    """Encodes bytes to a Base-65536 string."""
+    """Encodes bytes to a base65536 string."""
     stream = io.StringIO()
     length = len(value)
     for x in range(0, length, 2):
@@ -120,7 +120,7 @@ def encode(value):
 
 
 def decode(value):
-    """Decodes bytes from a Base-65536 string."""
+    """Decodes bytes from a base65536 string."""
     stream = io.BytesIO()
     done = False
     for ch in value:
@@ -129,12 +129,12 @@ def decode(value):
         try:
             b2 = B2[code_point - b1]
         except KeyError:
-            raise ValueError('Invalid Base-65536 code '
+            raise ValueError('Invalid base65536 code '
                              'point: %d' % code_point)
         b = int2byte(b1) if b2 == -1 else int2byte(b1) + int2byte(b2)
         if len(b) == 1:
             if done:
-                raise ValueError('Base-65536 sequence '
+                raise ValueError('base65536 sequence '
                                  'continued after final byte')
             done = True
         stream.write(b)

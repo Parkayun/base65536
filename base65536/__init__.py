@@ -3,7 +3,7 @@
    base65536
    ~~~~~~~~~
 
-   Base-65536 Python implementation.
+   base65536 Python implementation.
 
 """
 from .__about__ import __version__  # noqa
