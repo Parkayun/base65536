@@ -31,7 +31,7 @@ Quick start
 .. sourcecode:: python
 
    >>> import base65536
-   >>> a = base65536.encode("Hello World")
+   >>> a = base65536.encode(b"Hello World")
    >>> print(a)
    驈ꍬ啯ꍲᕤ
    >>> print(base65536.decode(a))
